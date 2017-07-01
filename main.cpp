@@ -1,12 +1,18 @@
-//°üº¬Í·ÎÄ¼ş
+/*
+ *æœ¬é¡¹ç›®GPL3.0å¼€æºï¼Œhttps://github.com/xqymain/AirPlane-War/
+ *è¯·åŠ¡å¿…éµå¾ªGPL3.0
+ *è°¢è°¢æ‚¨çš„æ”¯æŒ
+ *by xqymain
+*/
+//åŒ…å«å¤´æ–‡ä»¶
 #include <windows.h>
 #include <time.h>
 #include "resource.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-//°üº¬¿âÎÄ¼ş
-#pragma comment (lib,"winmm.lib")  //²¥·ÅÒôÀÖ µ÷ÓÃlib
+//åŒ…å«åº“æ–‡ä»¶
+#pragma comment (lib,"winmm.lib")  //æ’­æ”¾éŸ³ä¹ è°ƒç”¨lib
 
 typedef struct Node
 {
@@ -15,15 +21,15 @@ typedef struct Node
 	struct Node *pnext;
 
 }DiRen,FeiJi,ZiDan;
-//TODO£ºÈ«¾Ö³õÊ¼»¯´úÂë
+//TODOï¼šå…¨å±€åˆå§‹åŒ–ä»£ç 
 DiRen *pDiRen = NULL;
 ZiDan *pZiDan = NULL;
 FeiJi *pFeiJi = NULL;
 static int score = 0;
 static wchar_t nScore[20];
-static int var = 0;	//ÅĞ¶Ï×Ô¼º¹¥»÷µÄ´ÎÊı
+static int var = 0;	//åˆ¤æ–­è‡ªå·±æ”»å‡»çš„æ¬¡æ•°
 int Direnmovevar = 10;
-//TODO:º¯ÊıÔÚ´ËÉùÃ÷
+//TODO:å‡½æ•°åœ¨æ­¤å£°æ˜
 void CreateDiRen();
 void ShowDiRen(struct Node *pHead, HWND hWnd);
 void CreateZiJi(HWND hWnd);
@@ -36,21 +42,21 @@ void ReleaseDiRen(DiRen **pHead);
 void ReleaseZiDan(ZiDan **pHead);
 void DirenMoveVar();
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-//ºê¶¨Òå define
+//å®å®šä¹‰ define
 #define TIME_DIREN         101
 #define TIME_DIRENMOVE     102  
 #define TIME_ZIDAN         103
 #define TIME_DIRENRELEASE  104
 #define TIME_ZIDANMOVE     105
 #define TIME_ZIDANRELEASE  107
-//WinMain()º¯Êı
+//WinMain()å‡½æ•°
 //
 //
-//WindowsÓ¦ÓÃ³ÌĞòÈë¿Ú
+//Windowsåº”ç”¨ç¨‹åºå…¥å£
 int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,int nCmdShow)
 {
-	//´´½¨´°¿Ú 
+	//åˆ›å»ºçª—å£ 
 	WNDCLASSEX wndClass = { 0 };
 	wndClass.style=CS_HREDRAW|CS_VREDRAW|CS_OWNDC;
 	wndClass.cbClsExtra=0;
@@ -64,19 +70,19 @@ int WINAPI WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,
 	wndClass.lpszMenuName=NULL;
 	wndClass.hIconSm = NULL;
 	wndClass.cbSize = sizeof(WNDCLASSEX);
-	//×¢²á´°¿Ú
+	//æ³¨å†Œçª—å£
 	if (!RegisterClassEx(&wndClass))
 	{
 		return -1;
 	}
-	//´´½¨´°¿Ú
-	HWND hWnd = CreateWindow(L"AirPlane", L"À×öªÕ½»ú", WS_OVERLAPPEDWINDOW,100,100,600,600,NULL,NULL,hInstance,NULL);
-	//ÒÆ¶¯ ÏÔÊ¾ ¸üĞÂ´°¿Ú
+	//åˆ›å»ºçª—å£
+	HWND hWnd = CreateWindow(L"AirPlane", L"é›·éœ†æˆ˜æœº", WS_OVERLAPPEDWINDOW,100,100,600,600,NULL,NULL,hInstance,NULL);
+	//ç§»åŠ¨ æ˜¾ç¤º æ›´æ–°çª—å£
 	ShowWindow(hWnd,nCmdShow);
 	UpdateWindow(hWnd);
 
-	//PlaySound(L"music.wav",NULL,SND_FILENAME|SND_ASYNC|SND_LOOP); //Ñ­»·²¥·Å±³¾°ÒôÀÖ
-	//ÏûÏ¢Ñ­»·
+	//PlaySound(L"music.wav",NULL,SND_FILENAME|SND_ASYNC|SND_LOOP); //å¾ªç¯æ’­æ”¾èƒŒæ™¯éŸ³ä¹
+	//æ¶ˆæ¯å¾ªç¯
 	MSG msg = { 0 };
 	while (GetMessage(&msg,NULL,0,0))
 	{
@@ -96,8 +102,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_TIMER:
-		hDC = GetDC(hWnd); //µÃµ½Éè±¸¾ä±ú
-		hBitmap = LoadBitmap(GetModuleHandle(NULL),MAKEINTRESOURCE(IDB_BITMAP1));  //ÔØÈë±³¾°
+		hDC = GetDC(hWnd); //å¾—åˆ°è®¾å¤‡å¥æŸ„
+		hBitmap = LoadBitmap(GetModuleHandle(NULL),MAKEINTRESOURCE(IDB_BITMAP1));  //è½½å…¥èƒŒæ™¯
 		GetObject(hBitmap,sizeof(hBitmap),&bBitmap);
 		memDC = CreateCompatibleDC(hDC);
 		SelectObject(memDC,hBitmap);
@@ -108,7 +114,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			i++;
 		}
-		TextOut(hDC, 0, 0, L"·ÖÊı:", 4);
+		TextOut(hDC, 0, 0, L"åˆ†æ•°:", 4);
 		TextOut(hDC, 30, 0, nScore, i);
 		DeleteDC(memDC);
 		ReleaseDC(hWnd, hDC);
@@ -192,12 +198,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 		return DefWindowProc(hWnd, message, wParam, lParam);
 }
-//ÖÆ×÷µĞÈË
+//åˆ¶ä½œæ•Œäºº
 void CreateDiRen()
 {
 	DiRen *u;
 	u = (struct Node*)malloc(sizeof(struct Node));
-	u->x = rand() % 550;  //µĞÈËËæ»ú³öÏÖµÄx×ø±ê
+	u->x = rand() % 550;  //æ•Œäººéšæœºå‡ºç°çš„xåæ ‡
 	u->y = -10;
 	u->pnext = NULL;
 	if (NULL == pDiRen)
@@ -210,22 +216,22 @@ void CreateDiRen()
 		pDiRen = u;
 	}
 }
-//ÏÔÊ¾µĞÈË
+//æ˜¾ç¤ºæ•Œäºº
 void ShowDiRen(struct Node *pHead,HWND hWnd)
 {
 	HDC hDC;
 	HDC memDC;
 	HBITMAP hBitmap;
 	BITMAP bBitmap;
-	hDC = GetDC(hWnd); //µÃµ½Éè±¸¾ä±ú
-	hBitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP2));  //ÔØÈëµĞÈË
+	hDC = GetDC(hWnd); //å¾—åˆ°è®¾å¤‡å¥æŸ„
+	hBitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP2));  //è½½å…¥æ•Œäºº
 	GetObject(hBitmap, sizeof(hBitmap), &bBitmap);
 	memDC = CreateCompatibleDC(hDC);
 	SelectObject(memDC, hBitmap);
 	while (pHead!=NULL)
 	{
-		//Í¸Ã÷ÕÚÕÖ·¨
-		//¹ş¹ş ºÃÏ·À´ÁË
+		//é€æ˜é®ç½©æ³•
+		//å“ˆå“ˆ å¥½æˆæ¥äº†
 		BitBlt(hDC, pHead->x, pHead->y, 40, 40, memDC, 40, 0, SRCAND);
 		BitBlt(hDC, pHead->x, pHead->y, 40, 40, memDC, 0, 0, SRCPAINT);
 		pHead = pHead->pnext;
@@ -234,19 +240,19 @@ void ShowDiRen(struct Node *pHead,HWND hWnd)
 	ReleaseDC(hWnd, hDC);
 	DeleteObject(hBitmap);
 }
-//¹¹Ôì×Ô¼º
+//æ„é€ è‡ªèº«é£æœº
 void CreateZiJi(HWND hWnd)
 {
 	HDC hDC;
 	HDC memDC;
 	HBITMAP hBitmap;
 	BITMAP bBitmap;
-	hDC = GetDC(hWnd); //µÃµ½Éè±¸¾ä±ú
-	hBitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP3));  //ÔØÈë×Ô¼º
+	hDC = GetDC(hWnd); //å¾—åˆ°è®¾å¤‡å¥æŸ„
+	hBitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP3));  //è½½å…¥è‡ªèº«é£æœº
 	GetObject(hBitmap, sizeof(hBitmap), &bBitmap);
 	memDC = CreateCompatibleDC(hDC);
 	SelectObject(memDC, hBitmap);
-		//Í¸Ã÷ÕÚÕÖ·¨
+	//é€æ˜é®ç½©æ³• äºŒæ¬¡ï¼šSRCAND SRCPAINT
 	BitBlt(hDC, pFeiJi->x, pFeiJi->y, 40, 40, memDC, 40, 0, SRCAND);
 	BitBlt(hDC, pFeiJi->x, pFeiJi->y, 40, 40, memDC, 0, 0, SRCPAINT);
 	DeleteDC(memDC);
@@ -257,7 +263,7 @@ void CreateZiDan()
 {
 	ZiDan *u;
 	u = (ZiDan*)malloc(sizeof(ZiDan));
-	u->x = pFeiJi->x+20;  //×Óµ¯×ø±ê
+	u->x = pFeiJi->x+20;  //å­å¼¹åæ ‡
 	u->y = pFeiJi->y+10;
 	u->pnext = NULL;
 	if (NULL == pZiDan)
@@ -270,22 +276,21 @@ void CreateZiDan()
 		pZiDan = u;
 	}
 }
-//ÏÔÊ¾µĞÈË
+//æ˜¾ç¤ºæ•Œäºº
 void ShowZiDan(ZiDan *pHead,HWND hWnd)
 {
 	HDC hDC;
 	HDC memDC;
 	HBITMAP hBitmap;
 	BITMAP bBitmap;
-	hDC = GetDC(hWnd); //µÃµ½Éè±¸¾ä±ú
-	hBitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP4));  //ÔØÈë×Óµ¯
+	hDC = GetDC(hWnd); //å¾—åˆ°è®¾å¤‡å¥æŸ„
+	hBitmap = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BITMAP4));  //è½½å…¥å­å¼¹
 	GetObject(hBitmap, sizeof(hBitmap), &bBitmap);
 	memDC = CreateCompatibleDC(hDC);
 	SelectObject(memDC, hBitmap);
 	while (pHead != NULL)
 	{
-		//Í¸Ã÷ÕÚÕÖ·¨
-		//¹ş¹ş ºÃÏ·À´ÁË
+		//é€æ˜é®ç½©æ³•
 		BitBlt(hDC, pHead->x, pHead->y, 15, 25, memDC, 15, 0, SRCAND);
 		BitBlt(hDC, pHead->x, pHead->y, 15, 25, memDC, 0, 0, SRCPAINT);
 		pHead = pHead->pnext;
@@ -294,7 +299,7 @@ void ShowZiDan(ZiDan *pHead,HWND hWnd)
 	ReleaseDC(hWnd, hDC);
 	DeleteObject(hBitmap);
 }
-//µĞÈËÒÆ¶¯
+//æ•Œäººç§»åŠ¨
 void DiRenMove(DiRen *pHead)
 {
 	while (pHead!=NULL)
@@ -303,7 +308,7 @@ void DiRenMove(DiRen *pHead)
 		pHead = pHead->pnext;
 	}
 }
-//×Óµ¯ÒÆ¶¯  Ìõ¼ş
+//å­å¼¹ç§»åŠ¨  æ¡ä»¶
 void ZiDanMove(ZiDan *pHead)
 {
 	while (pHead != NULL)
@@ -317,7 +322,7 @@ void Shoot(HWND hWnd, FeiJi *ziji, DiRen **diren, ZiDan **zidan)
 	DiRen *js1 = *diren;
 	ZiDan *js2 = *zidan;
 	int n = 1;
-	//ÅĞ¶Ï×Ô¼ºÊÇ·ñ×²»÷¶Ô·½
+	//åˆ¤æ–­è‡ªå·±æ˜¯å¦æ’å‡»å¯¹æ–¹
 	while (js1 != NULL)
 	{
 		if ((ziji->x - js1->x<30 && ziji->x - js1->x>-38) && (ziji->y-js1->y<25&&ziji->y-js1->y>-38))
@@ -327,7 +332,7 @@ void Shoot(HWND hWnd, FeiJi *ziji, DiRen **diren, ZiDan **zidan)
 			KillTimer(hWnd, TIME_DIRENMOVE);
 			KillTimer(hWnd, TIME_ZIDANMOVE);
 			KillTimer(hWnd, TIME_DIRENRELEASE);
-			MessageBox(hWnd, L"ÓÎÏ·½áÊø£¡¾­³ÌĞò¾«ĞÄÅĞ¶¨£¬Äã±»¹¥»÷ÁË£¡  ×÷Õß£ºĞÏÇìÓî", L"À×öªÕ½»úÏûÏ¢", MB_OK);
+			MessageBox(hWnd, L"æ¸¸æˆç»“æŸï¼ç»ç¨‹åºç²¾å¿ƒåˆ¤å®šï¼Œä½ è¢«æ”»å‡»äº†ï¼  ä½œè€…ï¼šé‚¢åº†å®‡", L"é›·éœ†æˆ˜æœºæ¶ˆæ¯", MB_OK);
 			PostQuitMessage(0);
 			break;
 		}
@@ -336,7 +341,7 @@ void Shoot(HWND hWnd, FeiJi *ziji, DiRen **diren, ZiDan **zidan)
 			js1 = js1->pnext;
 		}
 	}
-	//ÅĞ¶ÏµĞ»úÖĞµ¯
+	//åˆ¤æ–­æ•Œæœºä¸­å¼¹
 	js1 = *diren;
 	js2 = *zidan;
 	while ((js1 = *diren) != NULL)
@@ -345,7 +350,7 @@ void Shoot(HWND hWnd, FeiJi *ziji, DiRen **diren, ZiDan **zidan)
 		n = 0;
 		while ((js2 = *zidan) != NULL)
 		{
-			//ÅĞ¶ÏÊÇ·ñ´òÖĞµĞÈË
+			//åˆ¤æ–­æ˜¯å¦æ‰“ä¸­æ•Œäºº
 			if ((js2->x - js1->x <= 40 && js2->x - js1->x >= -5) && (js2->y - js1->y <= 40 && js2->y - js1->y >= -5))
 			{
 				n = 1;
@@ -363,13 +368,13 @@ void Shoot(HWND hWnd, FeiJi *ziji, DiRen **diren, ZiDan **zidan)
 				break;
 			}
 			else
-				zidan = &js2->pnext; //Èç¹ûÃ»ÖĞ ×Óµ¯ÅĞ¶ÏÏÂÒ»¸ö
+				zidan = &js2->pnext; //å¦‚æœæ²¡ä¸­ å­å¼¹åˆ¤æ–­ä¸‹ä¸€ä¸ª
 		}
 		if (n != 1)
-			diren = &js1->pnext; //µĞÈËÅĞ¶ÏÏÂÒ»¸ö
+			diren = &js1->pnext; //æ•Œäººåˆ¤æ–­ä¸‹ä¸€ä¸ª
 	}
 }
-//ÊÍ·Å
+//é‡Šæ”¾
 void ReleaseZiDan(ZiDan **pHead)
 {
 	ZiDan *js = *pHead;
