@@ -374,7 +374,7 @@ void Shoot(HWND hWnd, FeiJi *ziji, DiRen **diren, ZiDan **zidan)
 			diren = &js1->pnext; //敌人判断下一个
 	}
 }
-//释放
+//释放子弹
 void ReleaseZiDan(ZiDan **pHead)
 {
 	ZiDan *js = *pHead;
@@ -389,6 +389,7 @@ void ReleaseZiDan(ZiDan **pHead)
 			pHead = &js->pnext;
 	}
 }
+//释放敌人
 void ReleaseDiRen(DiRen **pHead)
 {
 	ZiDan *js = *pHead;
@@ -403,9 +404,13 @@ void ReleaseDiRen(DiRen **pHead)
 			pHead = &js->pnext;
 	}
 }
+//变更敌人移动速度，增加难度
 void DirenMoveVar()
 {
 	if (var = 20)
-		Direnmovevar = 15;
+        {
+	   Direnmovevar+=5;
+	   var=0;
+        }
 
 }
