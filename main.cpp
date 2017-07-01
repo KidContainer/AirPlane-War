@@ -28,7 +28,7 @@ FeiJi *pFeiJi = NULL;
 static int score = 0;
 static wchar_t nScore[20];
 static int var = 0;	//判断自己攻击的次数
-int Direnmovevar = 10;
+int Direnmovevar = 10;  //敌人移动速度，为提高游戏难度
 //TODO:函数在此声明
 void CreateDiRen();
 void ShowDiRen(struct Node *pHead, HWND hWnd);
